@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 
 from .exeptions import StockInProductError, CuantityZeroError, ProductRepetitionOrderError
 from .models import Product, Order, Order_Detail
@@ -9,11 +10,13 @@ from .utils import Util
 
 
 class ProductViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
     serializer_class = ProductSerializer
     queryset = Product.objects.all()
 
 
 class OrderViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
     serializer_class = OrderSerializer
     queryset = Order.objects.all()
 
@@ -62,5 +65,6 @@ class OrderViewSet(viewsets.ModelViewSet):
 
 
 class OrderDetailViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
     serializer_class = Order_DetailSerializer
     queryset = Order_Detail.objects.all()
